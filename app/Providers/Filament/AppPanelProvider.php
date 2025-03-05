@@ -25,12 +25,14 @@ class AppPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('app')
-            ->path('/')
+            ->path('auth')
             ->login()
             ->registration()
+            ->databaseNotifications()
             // ->emailVerification()
             // ->passwordReset()
             ->profile()
+            ->brandName('Conference')
             ->colors([
                 'primary' => Color::Indigo,
             ])
@@ -57,6 +59,7 @@ class AppPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->sidebarFullyCollapsibleOnDesktop();
     }
 }

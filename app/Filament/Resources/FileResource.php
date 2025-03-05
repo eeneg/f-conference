@@ -23,7 +23,11 @@ class FileResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('title')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\DatePicker::make('date_received')
+
             ]);
     }
 
@@ -31,7 +35,12 @@ class FileResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('date_received')
+                    ->searchable()
+                    ->dateTime('F j, Y')
+                    ->sortable()
             ])
             ->filters([
                 //
@@ -60,5 +69,15 @@ class FileResource extends Resource
             'create' => Pages\CreateFile::route('/create'),
             'edit' => Pages\EditFile::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'The number of files';
     }
 }

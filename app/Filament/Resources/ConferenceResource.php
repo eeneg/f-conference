@@ -23,7 +23,21 @@ class ConferenceResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('title')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\DatePicker::make('date')
+                    ->required(),
+                    Forms\Components\Toggle::make('is_held')
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->label('Is Held')
+                    ->inline(false)
+                    ->default(false)
+                    ->required(),
+                Forms\Components\RichEditor::make('agenda')
+                    ->required()
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -31,7 +45,19 @@ class ConferenceResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('title')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('date')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
