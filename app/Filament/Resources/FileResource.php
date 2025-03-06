@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 
 class FileResource extends Resource
 {
@@ -27,7 +29,13 @@ class FileResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('date_received')
-
+                    ->required(),
+                SpatieMediaLibraryFileUpload::make('file_path')
+                    ->directory('files')
+                    ->storeFileNamesIn('file_name')
+                    ->conversion('thumb')
+                    ->acceptedFileTypes(['application/pdf'])
+                    ->required(),
             ]);
     }
 
@@ -40,7 +48,10 @@ class FileResource extends Resource
                 Tables\Columns\TextColumn::make('date_received')
                     ->searchable()
                     ->dateTime('F j, Y')
-                    ->sortable()
+                    ->sortable(),
+                SpatieMediaLibraryImageColumn::make('file_path')
+                    ->conversion('thumb')
+                    ->label('File')
             ])
             ->filters([
                 //

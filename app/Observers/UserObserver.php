@@ -13,11 +13,11 @@ class UserObserver
      */
     public function created(User $user): void
     {
-        $recipient = Auth::user();
-        Notification::make()
-            ->title('Saved successfully')
-            ->body('The user has been saved successfully.')
-            ->sendToDatabase($recipient);
+        // $recipient = Auth::user();
+        // Notification::make()
+        //     ->title('Saved successfully')
+        //     ->body('The user has been saved successfully.')
+        //     ->sendToDatabase($recipient);
     }
 
     /**
